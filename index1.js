@@ -33,15 +33,19 @@ var ques20 = new QuestionSet("What is the capital of punjab?", "Chandigarh", "pa
 var quesarray = [ques1, ques2, ques3, ques4, ques5, ques6, ques7, ques8, ques9, ques10, ques11, ques12, ques13, ques14, ques15, ques16, ques17, ques18, ques19, ques20];
 var length = quesarray.length; /*to generate the random numbers*/
 var randomPattern = []; /*Empty array to push all the randomly generated ques objects*/
+var userClickPattern = [];
 var finalScore = []; /*Empty array to push incremented score when answer for question is correct*/
 var k = 1; /* variable k to generate serial number for questions generated randomly */
 var start = false; /*Boolean for initial keypress event to start the quiz content*/
 var point = 0; /*variable to update the score as soon as my answer to question is correct */
 beforeGameStart();
+begin();
+var timerSound = new Audio("sounds/game sound.mp3");
 /* function call to hide the container containing question object(i.e. question and four multiple choice answers) before game start */
 
 
 // keypress event for the game to start
+function begin() {
 document.querySelector("#buttonclick").addEventListener("click", function() {
   if (!start) {
     headUpdate(); /* function call to update score after game start*/
@@ -49,10 +53,15 @@ document.querySelector("#buttonclick").addEventListener("click", function() {
     start = true;
     afterGameStart(); /*function call to show the container containing question object after game starts*/
     /* to play the background sound throught the game*/
-    var timerSound = new Audio("sounds/game sound.mp3");
-    timerSound.play();
+    // var timerSound = new Audio("sounds/game sound.mp3");
+    // timerSound.play();
+
+    gameStartSound(userClickPattern.length);  /*function call to play the background game sound*/
+
   }
 });
+
+}
 
 
 // function definition for title updation to increment score for every correct answer
@@ -94,12 +103,14 @@ var length1 = document.querySelectorAll(".optionclick").length;
 for (var i = 0; i < length1; i++) {
   document.querySelectorAll(".optionclick")[i].addEventListener("click", function() {
     var clickContent = this.innerText;
+    userClickPattern.push(clickContent);
     // condition for correct answer of each randomly generated questions
     if ((clickContent === ques1.option2) || (clickContent === ques2.option1) || (clickContent === ques3.option1) || (clickContent === ques4.option2) || (clickContent === ques5.option4) || (clickContent === ques6.option1) || (clickContent === ques7.option2) || (clickContent === ques8.option2) || (clickContent === ques9.option4) || (clickContent === ques10.option1) || (clickContent === ques11.option2) || (clickContent === ques12.option4) || (clickContent === ques13.option4) || (clickContent === ques14.option1) || (clickContent === ques15.option2) || (clickContent === ques16.option4) || (clickContent === ques17.option2) || (clickContent === ques18.option2) || (clickContent === ques19.option4) || (clickContent === ques20.option1)) {
 
-      if (randomPattern.length <= 9) {
+      if (userClickPattern.length <= 9) {
         headUpdate(); /*function call to update my score after answer to my question is correct*/
         correctAnswerStyle(this); /*function call to add styling when my answer is correct*/
+
         // function call for next randomly generated question object after correct answer for current question object
         setTimeout(function() {
           quizSequence();
@@ -108,6 +119,7 @@ for (var i = 0; i < length1; i++) {
         correctAnswerStyle(this);
         setTimeout(function() {
           endQuiz(); /*ending of quiz after 10th question answer is correct*/
+          gameStartSound(userClickPattern.length);
         }, 1500);
 
       }
@@ -115,7 +127,7 @@ for (var i = 0; i < length1; i++) {
     }
     // else condition for wrong answers of randomly generated question
     else {
-      if (randomPattern.length <= 9) {
+      if (userClickPattern.length <= 9) {
         wrongAnswerStyle(this); /*function call to add styling when my answer is incorrect*/
         // function call for next randomly generated question object after wrong answer for current question object
         setTimeout(function() {
@@ -125,6 +137,7 @@ for (var i = 0; i < length1; i++) {
         wrongAnswerStyle(this);
         setTimeout(function() {
           endQuiz(); /* ending of quiz after 10th question answer is wrong */
+          gameStartSound(userClickPattern.length); /* function call to stop background game sound after quiz of 10 questions is completed*/
         }, 1500);
 
       }
@@ -135,13 +148,36 @@ for (var i = 0; i < length1; i++) {
 
 // function definition  to display final score after the quiz of 10 questions is ended and reset all the variables to begin new game
 function endQuiz() {
-  if (finalScore.length === 10) {
+  if ( (finalScore.length > 8) && (finalScore.length <= 10) ) {
     document.querySelector("h1").innerHTML = "Your final score is" + " " + (finalScore.length) + "/10" + "<br>" + "Congrats!!You are Perfect" + "<br>" + "click to continue";
-    gameCompleteSound(2); /*function call to add sound after final score display */
+    gameCompleteSound(1); /*function call to add sound after final score display */
+    afterGameEnd(); // function call to hide the question object container after game end and reset all the stuff
+    // document.querySelector("h1").classList.add("sizing");
+    // document.querySelector(".container").classList.add("hidden");
+    // document.addEventListener("click", function() {
+    //   beforeGameStart();
+    //   document.querySelector("h1").innerHTML = "Test your IQ";
+    //   document.querySelector("#buttonclick").classList.remove("hidden1");
+    //
+    //
+    //   //   document.querySelector("h1").classList.add("sizing");
+    //   //   document.querySelector(".container").classList.add("hidden");
+    //   //   document.querySelector("#buttonclick").classList.remove("hidden1");
+    //   quesarray = quesarray.concat(randomPattern);
+    //   randomPattern = [];
+    //   userClickPattern = [];
+    //   finalScore = [];
+    //   k = 1;
+    //   point = 0;
+    //   start = false;
+    //   begin();
+    //
+    // });
 
-  } else if ((finalScore.length > 5) && (finalScore.length < 10)) {
+
+  } else if ( (finalScore.length > 5) && (finalScore.length <= 8) ) {
     document.querySelector("h1").innerHTML = "Your final score is" + " " + (finalScore.length) + "/10" + "<br>" + "Ok!! You are Better" + "<br>" + "click to continue";
-    gameCompleteSound(1);
+    gameCompleteSound(2);
     afterGameEnd(); // function call to hide the question object container after game end and reset all the stuff
   } else {
     document.querySelector("h1").innerHTML = "Your final score is" + " " + (finalScore.length) + "/10" + "<br>" + "Hmmmm!! Better luck next time" + "<br>" + "click to continue";
@@ -167,6 +203,16 @@ function afterGameStart() {
   document.querySelector("#buttonclick").classList.add("hidden1");
 }
 
+function gameStartSound(lengthRand) {
+
+  if (lengthRand === 10) {
+    timerSound.pause();      /*when game of 10 question is over and final score is displayed,the game background should stop*/
+    timerSound.currentTime = 0;
+  } else {
+    timerSound.play();
+  }
+}
+
 // function definition to hide the question object container after the game end and reset all stuff.With a key press start the next game..
 function afterGameEnd() {
   document.querySelector("h1").classList.add("sizing");
@@ -175,11 +221,13 @@ function afterGameEnd() {
   document.querySelector("#buttonnext").addEventListener("click", function() {
     quesarray = quesarray.concat(randomPattern);
     randomPattern = [];
+    userClickPattern = [];
     finalScore = [];
     k = 1;
     point = 0;
     headUpdate();
     quizSequence();
+    gameStartSound(userClickPattern.lenght);
     document.querySelector(".container").classList.remove("hidden");
     document.querySelector("h1").classList.remove("sizing");
     document.querySelector("#buttonnext").classList.add("buttonNextStyle");
