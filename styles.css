@@ -5,43 +5,45 @@
 }
 
 body {
-  background-color: #000080;
+  background-color: #64FFDA;
   color: #ffffff;
-
 }
+
+h1 {
+  color: #795548;
+}
+
 .container {
   display: grid;
   grid-template-columns: auto auto;
   /* background-color: #00DDFF; */
-
-
   width: 80%;
-  padding: 3%;
-  margin: 2.2% auto;
+  padding: 0 3%;
+  margin: 1.5% auto;
 }
 
 .item {
   border: 1px solid black;
   margin: 2%;
   border-radius: 5px;
+  padding: 0.6%;
 }
 
 .item1 {
   background-color: #800000;
   grid-column: 1/3;
-  height: 120px;
+  height: 110px;
   color: yellow;
   font-size: 2rem;
-
 }
 
 .item2, .item3, .item4, .item5 {
   background-color: lightgrey;
-  height: 50px;
+  height: 70px;
   margin: 4%;
   color: black;
   font-size: 1.5rem;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .item:not(.item1):hover {
@@ -53,53 +55,65 @@ body {
   margin-top: 4%;
 }
 
-#demo2, #demo3, #demo4, #demo5 {
-  transform: translateY(50%);
+#demo1, #demo2, #demo3, #demo4, #demo5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* classes through javaScript */
-
-
-#buttonclick{
-  margin:3% auto;
+.playStopMusic {
+  width: 200px;
+  display: inline-block;
+  margin: 10px 30px 0;
+  text-align: left;
 }
 
-#buttonnext{
-margin-top: 3%;
-padding:5px;
-background-color:green;
-color:yellow;
-font-size:1.5rem;
-border-radius:10%;
-cursor:pointer;
+.playStopDisplay {
+  display: none;
 }
 
-.imagestyle{
-  width:150px;
-  height:100px;
-  cursor:pointer;
+.show2 {
+  margin: 3% auto;
+  padding: 5px;
+  background-color: green;
+  color: yellow;
+  font-size: 1.5rem;
+  border-radius: 10%;
+  cursor: pointer;
+  display: block;
 }
 
-
-.hidden1{
-  display:none;
+.imagestyle {
+  width: 200px;
+  height: 150px;
+  cursor: pointer;
 }
 
-.buttonNextStyle{
-  display:none;
+.show1 {
+  margin: 3% auto;
+  display: block;
+}
+
+.hidden1 {
+  display: none;
+}
+
+.buttonNextStyle {
+  display: none;
 }
 
 .blink {
-  display:none;
+  display: none;
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .sizing {
   font-size: 3rem;
-  margin-top: 15%;
+  margin-top: 5%;
 }
 
 .option-style {
@@ -138,12 +152,24 @@ cursor:pointer;
   }
 }
 
+#aboutGame p {
+  color: black;
+  line-height: 1.5;
+  text-align: justify;
+  padding: 3% 5%;
+  font-size: 1rem;
+}
 
+#aboutGame h1 {
+  text-align: left;
+  padding-left: 5%;
+}
 
-
-
-
-
+@media only screen and (max-width:799px) {
+  #aboutGame p {
+    font-size: 3rem;
+  }
+}
 
 /* media queries */
 @media only screen and (max-width:799px) {
@@ -151,13 +177,18 @@ cursor:pointer;
     width: 90%;
   }
 
-  h1{
-   font-size:3rem;
-   margin-top:20%;
+  h1 {
+    font-size: 2rem;
+    margin-top: 10%;
   }
 
-  #demo1 {
+  /* #demo1 {
     transform: translateY(20%);
+  } */
+  #demo1, #demo2, #demo3, #demo4, #demo5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .item {
@@ -165,19 +196,22 @@ cursor:pointer;
   }
 
   .item1 {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
+    height: 140px;
   }
 
   .item2, .item3, .item4, .item5 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    grid-column: 1/3;
+    height: 60px;
   }
 
   .sizing {
     font-size: 2rem;
   }
 
-  .imagestyle{
-    width:250px;
-    height:200px;
+  .imagestyle {
+    width: 150px;
+    height: 100px;
   }
 }
